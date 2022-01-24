@@ -1,68 +1,65 @@
-let catsData, allImageEl;
-let page = 0;
-
-import { previous, next, pageIndicator } from "./variables.js";
+import { previous, next } from "./variables.js";
 import {
   disableButton,
-  createImages,
-  removeImages,
+  createImageElements,
+  removeContent,
   renderError,
+  setPageNumber,
+  showSpinner,
+  hideSpinner,
+  disable,
+  enable
 } from "./functions.js";
 
-const getCats = async (page) => {
+let pageNumber = 0;
+
+const renderCatImages = async (pageNumber) => {
+  removeContent();
+
   try {
+    
+    showSpinner();
     const response = await fetch(
-      `https://api.thecatapi.com/v1/images/search?limit=12&order=asc&page=${page}`,
+      `https://api.thecatapi.com/v1/images/search?limit=12&order=asc&page=${pageNumber}`,
       {
         headers: {
           "x-api-key": "875486a5-9423-44d9-ad2b-812b8df4b1be",
         },
       }
     );
-    //   if(!response) {
-    //   throw new Error(`You're offline 🤯`);
-    // }
-    catsData = await response.json();
+    const catData = await response.json();
+
+    removeContent();
+    createImageElements(catData);
+    hideSpinner();
   } catch (err) {
-    console.log(`${err.message} 💥`);
-    renderError(`You're offline 🤯`);
+    removeContent();
+    renderError(`You're offline 🤯 Check your internet-connection!`);
   } finally {
-    // previous.disabled = true;
-    // next.disabled = true;
   }
 };
 
-const setPageNumber = (page) =>
-  (pageIndicator.textContent = `Showing page ${page}`);
-
 window.addEventListener("load", async (e) => {
-  disableButton();
-  await getCats(page);
-  createImages(catsData);
-  setPageNumber(page);
+  showSpinner();
+  setPageNumber(pageNumber);
+  disableButton(previous);
+  await renderCatImages(pageNumber);
+  hideSpinner();
 });
 
 next.addEventListener("click", async (e) => {
-  page++;
+  pageNumber++;
+  setPageNumber(pageNumber);
   previous.disabled = false;
   previous.style.cursor = "pointer";
-  await getCats(page);
-  allImageEl = document.querySelectorAll("img");
-  createImages(catsData);
-  removeImages(allImageEl);
-  setPageNumber(page);
-  return page;
+  await renderCatImages(pageNumber);
 });
 
 previous.addEventListener("click", async (e) => {
-  page--;
-  disableButton();
-  await getCats(page);
-  allImageEl = document.querySelectorAll("img");
-  createImages(catsData);
-  removeImages(allImageEl);
-  setPageNumber(page);
-  return page;
+  pageNumber--;
+  setPageNumber(pageNumber);
+  disableButton(previous);
+  await renderCatImages(pageNumber);
 });
 
-export { page };
+export { pageNumber };

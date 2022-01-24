@@ -1,34 +1,78 @@
-import { page } from "./index.js";
-import { section, previous, pageIndicator, navigation } from "./variables.js";
+import { pageNumber } from "./index.js";
+import {
+  section,
+  previous,
+  pageIndicator,
+  next,
+  spinner,
+} from "./variables.js";
 
-const disableButton = function () {
-  if (page === 0) {
-    previous.disabled = true;
-    previous.style.cursor = "not-allowed";
+
+
+////////////////////////
+const disableButton = function (button) {
+  if (pageNumber === 0) {
+    button.disabled = true;
+    button.style.cursor = "not-allowed";
   }
 };
 
-const createImages = function (data) {
-  for (let i = 0; i < data.length; i++) {
+const disable = function () {
+  next.disabled = true;
+  next.style.cursor = "not-allowed";
+  previous.disabled = true;
+  previous.style.cursor = "not-allowed";
+};
+
+const enable = function () {
+    next.disabled = false;
+    next.style.cursor = "pointer";
+    previous.disabled = false;
+    previous.style.cursor = "pointer";
+  };
+/////////////////////////
+
+
+
+
+const createImageElements = function (catData) {
+  for (let i = 0; i < catData.length; i++) {
     const imageEl = document.createElement("img");
-    const imgURL = data[i].url;
+    const imgURL = catData[i].url;
     imageEl.src = imgURL;
     section.append(imageEl);
   }
 };
 
-const removeImages = function (allImageEl) {
-  allImageEl.forEach((el) => el.remove());
+const removeContent = function () {
+  section.textContent = "";
 };
 
-const renderError = function(msg) {
-    const errorMessage = document.createElement("p");
-    errorMessage.textContent = `You're offline 🤯`;
-    section.append(errorMessage);
-  }
+const renderError = function (msg) {
+  const errorMessage = document.createElement("p");
+  errorMessage.textContent = msg;
+  section.append(errorMessage);
+};
 
-//   const renderError = function (msg) {
-//     section.insertAdjacentText('beforeend', msg);
-//   };
+const setPageNumber = (pageNumber) =>
+  (pageIndicator.textContent = `Showing page ${pageNumber}`);
 
-export { disableButton, createImages, removeImages, renderError };
+function showSpinner() {
+  spinner.classList.add("show");
+}
+
+function hideSpinner() {
+  spinner.classList.remove("show");
+}
+
+export {
+  disableButton,
+  createImageElements,
+  removeContent,
+  renderError,
+  setPageNumber,
+  showSpinner,
+  hideSpinner,
+  disable,
+  enable
+};
