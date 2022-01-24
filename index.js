@@ -2,8 +2,12 @@ let catsData, allImageEl;
 let page = 0;
 
 import { previous, next, pageIndicator } from "./variables.js";
-import { disableButton, createImages, removeImages } from "./functions.js";
-
+import {
+  disableButton,
+  createImages,
+  removeImages,
+  renderError,
+} from "./functions.js";
 
 const getCats = async (page) => {
   try {
@@ -15,27 +19,28 @@ const getCats = async (page) => {
         },
       }
     );
-  //   if(!response) {
-  //   throw new Error(`You're offline 🤯`);
-  // }
+    //   if(!response) {
+    //   throw new Error(`You're offline 🤯`);
+    // }
     catsData = await response.json();
-  } catch(Error) {
-    // console.error(Error);
+  } catch (err) {
+    console.log(`${err.message} 💥`);
+    renderError(`You're offline 🤯`);
   } finally {
     // previous.disabled = true;
     // next.disabled = true;
   }
 };
 
-const setPageNumber = (page) => pageIndicator.textContent = `Showing page ${page}`;
+const setPageNumber = (page) =>
+  (pageIndicator.textContent = `Showing page ${page}`);
 
-
-  window.addEventListener("load", async (e) => {
-    disableButton();
-    await getCats(page);
-    createImages(catsData);
-    setPageNumber(page);
-  });
+window.addEventListener("load", async (e) => {
+  disableButton();
+  await getCats(page);
+  createImages(catsData);
+  setPageNumber(page);
+});
 
 next.addEventListener("click", async (e) => {
   page++;

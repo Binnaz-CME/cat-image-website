@@ -1,5 +1,5 @@
 import { page } from "./index.js";
-import { section, previous } from "./variables.js";
+import { section, previous, pageIndicator, navigation } from "./variables.js";
 
 const disableButton = function () {
   if (page === 0) {
@@ -21,4 +21,14 @@ const removeImages = function (allImageEl) {
   allImageEl.forEach((el) => el.remove());
 };
 
-export { disableButton, createImages, removeImages };
+const renderError = function(msg) {
+    const errorMessage = document.createElement("p");
+    errorMessage.textContent = `You're offline 🤯`;
+    section.append(errorMessage);
+  }
+
+//   const renderError = function (msg) {
+//     section.insertAdjacentText('beforeend', msg);
+//   };
+
+export { disableButton, createImages, removeImages, renderError };

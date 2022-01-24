@@ -1,0 +1,24 @@
+{
+  "name": "cat-images-website",
+  "version": "1.0.0",
+  "description": "cat image website",
+  "main": "index.js",
+  "scripts": {
+    "start": "snowpack dev",
+    "build": "snowpack build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Binnaz-CME/cat-image-website.git"
+  },
+  "author": "Binnaz Akyüz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Binnaz-CME/cat-image-website/issues"
+  },
+  "homepage": "https://github.com/Binnaz-CME/cat-image-website#readme",
+  "devDependencies": {
+    "snowpack": "^3.8.8"
+  }
+}
