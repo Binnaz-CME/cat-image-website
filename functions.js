@@ -4,36 +4,29 @@ import {
   previous,
   pageIndicator,
   next,
-  spinner,
+  loadingSpinner,
 } from "./variables.js";
 
-
-
-////////////////////////
-const disableButton = function (button) {
+const disablePreviousButton = function () {
   if (pageNumber === 0) {
-    button.disabled = true;
-    button.style.cursor = "not-allowed";
+    previous.disabled = true;
+    previous.style.cursor = "not-allowed";
   }
 };
 
-const disable = function () {
+const disableButtons = function () {
   next.disabled = true;
   next.style.cursor = "not-allowed";
   previous.disabled = true;
   previous.style.cursor = "not-allowed";
 };
 
-const enable = function () {
-    next.disabled = false;
-    next.style.cursor = "pointer";
-    previous.disabled = false;
-    previous.style.cursor = "pointer";
-  };
-/////////////////////////
-
-
-
+const enableButtons = function () {
+  previous.disabled = false;
+  previous.style.cursor = "pointer";
+  next.disabled = false;
+  next.style.cursor = "pointer";
+};
 
 const createImageElements = function (catData) {
   for (let i = 0; i < catData.length; i++) {
@@ -44,7 +37,7 @@ const createImageElements = function (catData) {
   }
 };
 
-const removeContent = function () {
+const removeSectionContent = function () {
   section.textContent = "";
 };
 
@@ -57,22 +50,22 @@ const renderError = function (msg) {
 const setPageNumber = (pageNumber) =>
   (pageIndicator.textContent = `Showing page ${pageNumber}`);
 
-function showSpinner() {
-  spinner.classList.add("show");
+function showLoadingSpinner() {
+  loadingSpinner.classList.add("show");
 }
 
-function hideSpinner() {
-  spinner.classList.remove("show");
+function hideLoadingSpinner() {
+  loadingSpinner.classList.remove("show");
 }
 
 export {
-  disableButton,
+  disablePreviousButton,
   createImageElements,
-  removeContent,
+  removeSectionContent,
   renderError,
   setPageNumber,
-  showSpinner,
-  hideSpinner,
-  disable,
-  enable
+  showLoadingSpinner,
+  hideLoadingSpinner,
+  disableButtons,
+  enableButtons,
 };

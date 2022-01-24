@@ -1,24 +1,23 @@
 import { previous, next } from "./variables.js";
 import {
-  disableButton,
+  disablePreviousButton,
   createImageElements,
-  removeContent,
+  removeSectionContent,
   renderError,
   setPageNumber,
-  showSpinner,
-  hideSpinner,
-  disable,
-  enable
+  showLoadingSpinner,
+  hideLoadingSpinner,
+  disableButtons,
+  enableButtons,
 } from "./functions.js";
 
 let pageNumber = 0;
 
 const renderCatImages = async (pageNumber) => {
-  removeContent();
+  removeSectionContent();
 
   try {
-    
-    showSpinner();
+    showLoadingSpinner();
     const response = await fetch(
       `https://api.thecatapi.com/v1/images/search?limit=12&order=asc&page=${pageNumber}`,
       {
@@ -29,37 +28,38 @@ const renderCatImages = async (pageNumber) => {
     );
     const catData = await response.json();
 
-    removeContent();
+    removeSectionContent();
     createImageElements(catData);
-    hideSpinner();
+    hideLoadingSpinner();
   } catch (err) {
-    removeContent();
+    removeSectionContent();
     renderError(`You're offline 🤯 Check your internet-connection!`);
-  } finally {
   }
 };
 
 window.addEventListener("load", async (e) => {
-  showSpinner();
+  showLoadingSpinner();
   setPageNumber(pageNumber);
-  disableButton(previous);
+  disablePreviousButton();
   await renderCatImages(pageNumber);
-  hideSpinner();
+  hideLoadingSpinner();
 });
 
 next.addEventListener("click", async (e) => {
+  disableButtons();
   pageNumber++;
   setPageNumber(pageNumber);
-  previous.disabled = false;
-  previous.style.cursor = "pointer";
   await renderCatImages(pageNumber);
+  enableButtons();
 });
 
 previous.addEventListener("click", async (e) => {
+  disableButtons();
   pageNumber--;
   setPageNumber(pageNumber);
-  disableButton(previous);
   await renderCatImages(pageNumber);
+  enableButtons();
+  disablePreviousButton();
 });
 
 export { pageNumber };
