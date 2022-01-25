@@ -1,0 +1,29 @@
+:root {
+  --Staatliches: "Staatliches", cursive;
+  --font-weight: normal;
+}
+
+h1 {
+  font-family: "Neonderthaw", cursive;
+  font-size: 3rem;
+}
+
+small {
+  font-family: var(--Staatliches);
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+p {
+  font-family: var(--Staatliches);
+  font-size: 2rem;
+  font-weight: var(--font-weight);
+  color: rgba(224, 0, 0, 0.7);
+}
+
+button {
+  font-family: var(--Staatliches);
+  font-size: 1.2rem;
+  font-weight: var(--normalFontWeight);
+  letter-spacing: 1px;
+}
