@@ -7,28 +7,34 @@ import {
   loadingSpinner,
 } from "./variables.js";
 
-const disablePreviousButton = function () {
-  if (pageNumber === 0) {
-    previous.disabled = true;
-    previous.style.cursor = "not-allowed";
+const createContent = async () => {
+  try {
+    const response = await fetch(
+      `https://api.thecatapi.com/v1/images/search?limit=12&order=asc&page=${pageNumber}`,
+      {
+        headers: {
+          "x-api-key": "875486a5-9423-44d9-ad2b-812b8df4b1be",
+        },
+      }
+    );
+    const catData = await response.json();
+
+    removeSectionContent(); //removes previous content
+    createImageElements(catData); //creates new content
+  } catch (err) {
+    hideLoadingSpinner();
+    removeSectionContent();
+    renderError(`You're offline 🤯 Check your internet-connection!`);
   }
 };
 
-const disableButtons = function () {
-  next.disabled = true;
-  next.style.cursor = "not-allowed";
-  previous.disabled = true;
-  previous.style.cursor = "not-allowed";
+const renderContent = async (pageNumber) => {
+  showLoadingSpinner();
+  await createContent();
+  hideLoadingSpinner();
 };
 
-const enableButtons = function () {
-  previous.disabled = false;
-  previous.style.cursor = "pointer";
-  next.disabled = false;
-  next.style.cursor = "pointer";
-};
-
-const createImageElements = function (catData) {
+const createImageElements = (catData) => {
   for (let i = 0; i < catData.length; i++) {
     const imageEl = document.createElement("img");
     const imgURL = catData[i].url;
@@ -37,11 +43,9 @@ const createImageElements = function (catData) {
   }
 };
 
-const removeSectionContent = function () {
-  section.textContent = "";
-};
+const removeSectionContent = () => (section.textContent = "");
 
-const renderError = function (msg) {
+const renderError = (msg) => {
   const errorMessage = document.createElement("p");
   errorMessage.textContent = msg;
   section.append(errorMessage);
@@ -50,22 +54,30 @@ const renderError = function (msg) {
 const setPageNumber = (pageNumber) =>
   (pageIndicator.textContent = `Showing page ${pageNumber}`);
 
-function showLoadingSpinner() {
-  loadingSpinner.classList.add("show");
-}
+const disablePreviousButtonIfPageIsZero = () => {
+  if (pageNumber === 0) {
+    previous.disabled = true;
+  }
+};
 
-function hideLoadingSpinner() {
-  loadingSpinner.classList.remove("show");
-}
+const disableButtons = () => {
+  next.disabled = true;
+  previous.disabled = true;
+};
+
+const enableButtons = () => {
+  previous.disabled = false;
+  next.disabled = false;
+};
+
+const showLoadingSpinner = () => loadingSpinner.classList.add("show");
+
+const hideLoadingSpinner = () => loadingSpinner.classList.remove("show");
 
 export {
-  disablePreviousButton,
-  createImageElements,
-  removeSectionContent,
-  renderError,
+  renderContent,
+  disablePreviousButtonIfPageIsZero,
   setPageNumber,
-  showLoadingSpinner,
-  hideLoadingSpinner,
   disableButtons,
   enableButtons,
 };
