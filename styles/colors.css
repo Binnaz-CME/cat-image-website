@@ -7,6 +7,10 @@ body {
   background-color: rgba(255, 255, 202, 0.719);
 }
 
+small {
+  color: rgb(63, 63, 63);
+}
+
 button {
   border: 1px solid var(--black);
   background-color: rgba(0, 0, 0, 0);

@@ -9,13 +9,13 @@ import {
 
 let pageNumber = 0;
 
-window.addEventListener("load", async (e) => {
+window.addEventListener("load", async () => {
   setPageNumber(pageNumber);
   disablePreviousButtonIfPageIsZero();
   await renderContent(pageNumber);
 });
 
-next.addEventListener("click", async (e) => {
+next.addEventListener("click", async () => {
   disableButtons();
   pageNumber++;
   setPageNumber(pageNumber);
@@ -23,7 +23,7 @@ next.addEventListener("click", async (e) => {
   enableButtons();
 });
 
-previous.addEventListener("click", async (e) => {
+previous.addEventListener("click", async () => {
   disableButtons();
   pageNumber--;
   setPageNumber(pageNumber);

@@ -1,6 +1,7 @@
 :root {
-  --Staatliches: "Staatliches", cursive;
-  --font-weight: normal;
+  --primary-font-family: "Staatliches", cursive;
+  --primary-font-weight: normal;
+  --primary-font-size: 1.2rem;
 }
 
 h1 {
@@ -8,22 +9,22 @@ h1 {
   font-size: 3rem;
 }
 
-small {
-  font-family: var(--Staatliches);
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
 p {
-  font-family: var(--Staatliches);
   font-size: 2rem;
-  font-weight: var(--font-weight);
   color: rgba(224, 0, 0, 0.7);
 }
 
 button {
-  font-family: var(--Staatliches);
-  font-size: 1.2rem;
-  font-weight: var(--normalFontWeight);
   letter-spacing: 1px;
+}
+
+small, button {
+  font-size: var(--primary-font-size);
+}
+
+small,
+p,
+button {
+  font-family: var(--primary-font-family);
+  font-weight: var(--primary-font-weight);
 }
