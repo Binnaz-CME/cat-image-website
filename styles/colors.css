@@ -11,6 +11,10 @@ small {
   color: rgb(63, 63, 63);
 }
 
+img {
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
 button {
   border: 1px solid var(--black);
   background-color: rgba(0, 0, 0, 0);
@@ -20,11 +24,6 @@ button:after {
   background-color: var(--yellow);
 }
 
-img {
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-}
-
-.spinner:after {
-  border: 25px solid var(--yellow);
-  border-color: var(--yellow) transparent var(--yellow) transparent;
+.spinner div {
+  background: var(--yellow);
 }
