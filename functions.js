@@ -25,10 +25,14 @@ const createContent = async () => {
     hideLoadingSpinner();
     removeSectionContent();
     renderError(`You're offline 🤯 Check your internet-connection!`);
+  } finally {
+    enableButtons();
+    disablePreviousButtonIfPageIsZero();
   }
 };
 
 const renderContent = async (pageNumber) => {
+  disableButtons();
   showLoadingSpinner();
   await createContent();
   hideLoadingSpinner();
@@ -76,8 +80,5 @@ const hideLoadingSpinner = () => loadingSpinner.classList.remove("show");
 
 export {
   renderContent,
-  disablePreviousButtonIfPageIsZero,
   setPageNumber,
-  disableButtons,
-  enableButtons,
 };
