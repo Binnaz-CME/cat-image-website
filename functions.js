@@ -1,3 +1,5 @@
+import.meta.hot
+
 import { pageNumber } from "./index.js";
 import {
   section,
@@ -7,13 +9,15 @@ import {
   loadingSpinner,
 } from "./variables.js";
 
+const {SNOWPACK_PUBLIC_API_KEY} = __SNOWPACK_ENV__;
+
 const createContent = async () => {
   try {
     const response = await fetch(
       `https://api.thecatapi.com/v1/images/search?limit=12&order=asc&page=${pageNumber}`,
       {
         headers: {
-          "x-api-key": "875486a5-9423-44d9-ad2b-812b8df4b1be",
+          "x-api-key": SNOWPACK_PUBLIC_API_KEY,
         },
       }
     );

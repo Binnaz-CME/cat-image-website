@@ -31,6 +31,20 @@ To build the app for production, run:
 npm run build
 ````
 
-## API key
+## How to activate your API key
 
-Get an API-key from - [The Cat API](https://thecatapi.com/) and replace the template.
+1- Get an API-key from - [The Cat API](https://thecatapi.com/).
+
+2- To install snowpack dotenv plugin, run: 
+
+````
+npm install --save-dev @snowpack/plugin-dotenv
+````
+
+3- Create a .env file. Add following code to your .env and replace the template "YOUR_API_KEY":
+
+````
+SNOWPACK_PUBLIC_ENABLE_FEATURE=true
+
+SNOWPACK_PUBLIC_API_KEY=YOUR_API_KEY
+````
